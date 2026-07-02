@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>正在生成文旅打卡结果</title>
+    <link rel="stylesheet" href="/static/generate.css?v=20260629-result-scale1" />
+  </head>
+  <body>
+    <button id="back-button" class="back-button" type="button">返回上一步</button>
+
+    <main class="generation-shell">
+      <section class="generation-stage">
+        <div id="loading-state" class="loading-state">
+          <div class="loading-orbit">
+            <span class="loading-ring loading-ring-large"></span>
+            <span class="loading-ring loading-ring-small"></span>
+          </div>
+          <p class="loading-kicker">文旅打卡生成中</p>
+          <h1>正在生成中...</h1>
+          <p class="loading-copy">正在处理人物图与背景场景，请稍候，生成完成后会自动切换到成片界面。</p>
+        </div>
+
+        <div id="error-state" class="error-state hidden">
+          <p class="loading-kicker">生成失败</p>
+          <h1>当前结果页无法继续处理</h1>
+          <p id="error-message" class="loading-copy"></p>
+          <button id="error-back-button" class="primary-action" type="button">返回重新选择</button>
+        </div>
+
+        <div id="result-state" class="result-state hidden">
+          <div class="result-visual-shell">
+            <div id="result-backdrop" class="result-backdrop"></div>
+            <img id="generation-result-image" class="generation-result-image" alt="文旅打卡结果" />
+          </div>
+
+          <aside class="result-side-card">
+            <div class="side-card-head">
+              <p class="side-kicker">生成完成</p>
+              <h2>文旅打卡成片</h2>
+              <p id="generation-prompt-id" class="side-copy"></p>
+            </div>
+
+            <div id="generation-warning" class="generation-warning hidden"></div>
+
+            <div id="generation-qr-shell" class="qr-shell hidden">
+              <img id="generation-qr-image" class="generation-qr-image" alt="下载二维码" />
+            </div>
+
+            <div class="side-actions">
+              <a id="generation-download-link" class="primary-action" download="travel-checkin-result.png">下载保存</a>
+              <button id="open-editor-button" class="secondary-action hidden" type="button">图像编辑</button>
+              <a id="generation-share-link" class="secondary-action hidden" href="#" target="_blank" rel="noreferrer">打开下载页</a>
+            </div>
+
+            <p class="editor-tip">贴纸编辑应用后会同步更新二维码与下载页，扫码可下载编辑版成片。</p>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <div id="editor-modal" class="editor-modal hidden" aria-hidden="true">
+      <div class="editor-panel">
+        <div class="editor-head">
+          <div>
+            <p class="side-kicker">本地编辑</p>
+            <h2>emo 贴纸</h2>
+          </div>
+          <button id="close-editor-button" class="editor-close-button" type="button">关闭</button>
+        </div>
+
+        <div class="editor-body">
+          <div class="editor-preview-shell">
+            <div class="editor-canvas-stage">
+              <canvas id="editor-canvas" class="editor-canvas"></canvas>
+            </div>
+            <p class="editor-canvas-tip">点击贴纸可拖动，直接按住人像也可移动位置；文字与贴纸选中后都能调整大小。</p>
+          </div>
+
+          <div class="editor-controls">
+            <label class="editor-control" for="face-exposure-range">
+              <span>人像曝光</span>
+              <input id="face-exposure-range" type="range" min="-35" max="35" step="1" value="0" />
+            </label>
+
+            <label class="editor-control" for="face-smoothing-range">
+              <span>磨皮度</span>
+              <input id="face-smoothing-range" type="range" min="0" max="100" step="1" value="0" />
+            </label>
+
+            <label class="editor-control" for="person-size-range">
+              <span>人物大小</span>
+              <input id="person-size-range" type="range" min="60" max="180" step="1" value="100" />
+            </label>
+
+            <div class="editor-filter-bank">
+              <p class="editor-section-title">滤镜</p>
+              <div class="editor-filter-grid">
+                <button class="filter-chip is-active" type="button" data-filter="original">原图</button>
+                <button class="filter-chip" type="button" data-filter="warm">暖阳</button>
+                <button class="filter-chip" type="button" data-filter="cool">冷白</button>
+                <button class="filter-chip" type="button" data-filter="film">胶片</button>
+                <button class="filter-chip" type="button" data-filter="dream">梦幻</button>
+                <button class="filter-chip" type="button" data-filter="mono">黑白</button>
+              </div>
+            </div>
+
+            <div class="editor-sticker-bank">
+              <p class="editor-section-title">贴纸</p>
+              <div class="editor-sticker-grid">
+                <button class="sticker-chip" type="button" data-sticker-type="emoji" data-sticker-value="😎">
+                  <span class="sticker-chip-art">😎</span>
+                  <span class="sticker-chip-label">墨镜脸</span>
+                </button>
+                <button class="sticker-chip" type="button" data-sticker-type="emoji" data-sticker-value="😭">
+                  <span class="sticker-chip-art">😭</span>
+                  <span class="sticker-chip-label">暴风哭泣</span>
+                </button>
+                <button class="sticker-chip" type="button" data-sticker-type="emoji" data-sticker-value="🥹">
+                  <span class="sticker-chip-art">🥹</span>
+                  <span class="sticker-chip-label">委屈眼</span>
+                </button>
+                <button class="sticker-chip" type="button" data-sticker-type="emoji" data-sticker-value="💔">
+                  <span class="sticker-chip-art">💔</span>
+                  <span class="sticker-chip-label">心碎</span>
+                </button>
+                <button class="sticker-chip" type="button" data-sticker-type="image" data-sticker-value="sunglasses">
+                  <span class="sticker-chip-art">🕶</span>
+                  <span class="sticker-chip-label">墨镜</span>
+                </button>
+                <button class="sticker-chip" type="button" data-sticker-type="image" data-sticker-value="mustache">
+                  <span class="sticker-chip-art">〰</span>
+                  <span class="sticker-chip-label">胡子</span>
+                </button>
+                <button class="sticker-chip" type="button" data-sticker-type="image" data-sticker-value="rabbit-ears">
+                  <span class="sticker-chip-art">🐰</span>
+                  <span class="sticker-chip-label">兔耳朵</span>
+                </button>
+                <button class="sticker-chip" type="button" data-sticker-type="image" data-sticker-value="blush">
+                  <span class="sticker-chip-art">🌸</span>
+                  <span class="sticker-chip-label">腮红</span>
+                </button>
+                <button class="sticker-chip" type="button" data-sticker-type="image" data-sticker-value="sparkle-band">
+                  <span class="sticker-chip-art">✨</span>
+                  <span class="sticker-chip-label">星光条</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="editor-text-bank">
+              <p class="editor-section-title">文字</p>
+              <div class="editor-text-entry">
+                <input id="text-sticker-input" class="editor-text-input" type="text" maxlength="24" placeholder="输入想添加的文字" />
+                <button id="add-text-sticker-button" class="secondary-action" type="button">添加文字</button>
+              </div>
+            </div>
+
+            <label class="editor-control" for="sticker-size-range">
+              <span>元素大小</span>
+              <input id="sticker-size-range" type="range" min="72" max="624" step="2" value="220" />
+            </label>
+
+            <div class="editor-inline-actions">
+              <button id="remove-sticker-button" class="danger-action" type="button">移除当前贴纸</button>
+              <button id="reset-editor-button" class="secondary-action" type="button">重置编辑</button>
+            </div>
+
+            <p class="editor-action-tip">按住人像可拖动位置，也可以用“人物大小”单独调整人物缩放；贴纸和文字仍可单独编辑。</p>
+
+            <div class="editor-footer-actions">
+              <button id="cancel-editor-button" class="secondary-action" type="button">取消</button>
+              <button id="apply-editor-button" class="primary-action" type="button">应用编辑</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="/static/generate.js?v=20260616-hq-preview1"></script>
+  </body>
+</html>

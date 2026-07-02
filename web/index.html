@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AI &#34394;&#25311;&#25991;&#26053;&#25171;&#21345;&#39302;</title>
+    <link rel="stylesheet" href="/static/app.css?v=20260629-portrait-preview1" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <main class="studio-grid studio-grid-input-only">
+        <section class="panel upload-panel">
+          <div class="panel-header panel-header-large">
+            <div>
+              <h2>&#32032;&#26448;&#24037;&#20316;&#21488;</h2>
+            </div>
+          </div>
+
+          <div class="preview-grid" id="upload-workbench">
+            <div class="dropzone source-dropzone">
+              <div class="dropzone-head">
+                <div>
+                  <span class="dropzone-title">&#20154;&#29289;&#29031;</span>
+                </div>
+                <div class="camera-toolbar camera-toolbar-head">
+                  <input id="source-image" name="person_image" type="file" accept="image/*" />
+                  <button id="qr-upload-button" class="secondary-button" type="button">&#25195;&#30721;&#19978;&#20256;</button>
+                  <button id="open-camera-button" class="secondary-button" type="button">&#25171;&#24320;&#25668;&#20687;&#22836;</button>
+                  <button id="capture-camera-button" class="secondary-button" type="button" disabled>&#25293;&#29031;</button>
+                  <button id="close-camera-button" class="secondary-button" type="button" disabled>&#20851;&#38381;&#38236;&#22836;</button>
+                </div>
+                <div class="workbench-scene-actions">
+                  <div id="custom-upload-shell" class="hidden">
+                    <div class="custom-upload-row">
+                      <input id="target-image" name="background_image" type="file" accept="image/*" />
+                    </div>
+                  </div>
+                  <a id="scene-switch-top" class="secondary-button custom-scene-switch" href="/">&#20999;&#25442;&#22330;&#26223;</a>
+                  <button id="submit-button" class="primary-button" type="button">&#24320;&#22987;&#25171;&#21345;</button>
+                </div>
+              </div>
+
+              <div class="preview-shell">
+                <video id="source-camera" class="preview hidden" autoplay playsinline muted></video>
+                <canvas id="virtual-camera-preview" class="preview virtual-camera-preview hidden"></canvas>
+                <img id="source-preview" class="preview hidden" alt="&#20154;&#29289;&#29031;&#39044;&#35272;" />
+              </div>
+              <p id="camera-status" class="camera-status">&#35831;&#20808;&#36873;&#25321;&#32972;&#26223;&#22270;&#65292;&#20877;&#25171;&#24320;&#25668;&#20687;&#22836;&#25293;&#29031;</p>
+            </div>
+
+            <div class="dropzone background-mode-shell">
+              <div id="image-mode-section" class="background-mode-panel">
+                <div class="preview-shell">
+                  <img id="target-preview" class="preview hidden" alt="&#32972;&#26223;&#22270;&#39044;&#35272;" />
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div id="gallery-shell" class="gallery-shell gallery-shell-wide hidden">
+            <div class="gallery-header">
+              <div>
+                <h3>&#25991;&#26053;&#32972;&#26223;&#39044;&#35272;</h3>
+              </div>
+              <div class="gallery-toolbar">
+                <div class="gallery-scene-meta">
+                  <span>&#24403;&#21069;&#22330;&#26223;</span>
+                  <div class="gallery-scene-line">
+                    <strong id="scene-label">&#21271;&#20140;</strong>
+                    <a class="gallery-scene-link" href="/">&#20999;&#25442;&#22330;&#26223;</a>
+                  </div>
+                </div>
+                <p id="gallery-status">&#27491;&#22312;&#21152;&#36733;&#32972;&#26223;...</p>
+              </div>
+            </div>
+            <div id="template-gallery" class="template-gallery"></div>
+          </div>
+
+          <div class="actions">
+            <div class="actions-copy">
+              <p id="status-text" class="status-text">&#31561;&#24453;&#19978;&#20256;&#20154;&#29289;&#29031;</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel result-panel hidden" aria-hidden="true">
+          <div class="panel-header panel-header-large">
+            <div>
+              <h2>&#25171;&#21345;&#32467;&#26524;</h2>
+            </div>
+          </div>
+
+          <div class="result-stage">
+            <div class="result-stage-top">
+              <div class="result-stage-badge">&#39044;&#35272;&#21306;</div>
+            </div>
+
+            <div id="result-placeholder" class="result-placeholder">
+              <div class="placeholder-inner">
+                <div class="placeholder-camera">&#30456;&#26426;</div>
+                <p>&#39044;&#35272;&#21306;</p>
+              </div>
+            </div>
+
+            <img id="result-image" class="result-image hidden" alt="&#25991;&#26053;&#25171;&#21345;&#32467;&#26524;" />
+          </div>
+
+          <div class="result-action-row">
+            <a id="download-link" class="secondary-link is-disabled" download="travel-checkin-result.png" aria-disabled="true">&#19979;&#36733;&#20445;&#23384;</a>
+            <button id="regenerate-button" class="ghost-button" type="button" disabled>&#20877;&#29983;&#25104;&#19968;&#32452;</button>
+          </div>
+
+          <div id="share-panel" class="share-panel hidden">
+            <div class="share-copy-block">
+              <h3>&#25195;&#30721;&#19979;&#36733;&#21407;&#22270;</h3>
+              <p id="share-hint" class="share-hint">&#29983;&#25104;&#23436;&#25104;&#21518;&#20250;&#33258;&#21160;&#21019;&#24314;&#20108;&#32500;&#30721;&#65292;&#24494;&#20449;&#25195;&#30721;&#21363;&#21487;&#25171;&#24320;&#19979;&#36733;&#39029;&#12290;</p>
+              <a id="share-link" class="share-link" href="#" target="_blank" rel="noreferrer">&#25171;&#24320;&#19979;&#36733;&#39029;</a>
+            </div>
+
+            <div class="share-qr-card">
+              <img id="share-qr-image" class="share-qr-image" alt="&#25991;&#26053;&#25171;&#21345;&#32467;&#26524;&#19979;&#36733;&#20108;&#32500;&#30721;" />
+            </div>
+          </div>
+
+          <div id="result-meta" class="result-meta hidden">
+            <span id="prompt-id"></span>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div id="qr-upload-modal" class="qr-upload-modal hidden" aria-hidden="true">
+      <div class="qr-upload-panel" role="dialog" aria-modal="true" aria-labelledby="qr-upload-title">
+        <div class="qr-upload-head">
+          <div>
+            <h3 id="qr-upload-title">&#25195;&#30721;&#19978;&#20256;&#20154;&#29289;&#22270;</h3>
+            <p>&#25163;&#26426;&#25195;&#30721;&#21518;&#21487;&#20197;&#20174;&#30456;&#20876;&#36873;&#25321;&#25110;&#29616;&#22330;&#25293;&#29031;&#12290;</p>
+          </div>
+          <button id="qr-upload-close-button" class="qr-upload-close" type="button">&#20851;&#38381;</button>
+        </div>
+        <div class="qr-upload-code-shell">
+          <img id="qr-upload-image" class="qr-upload-image" alt="&#25195;&#30721;&#19978;&#20256;&#20154;&#29289;&#22270;&#20108;&#32500;&#30721;" />
+        </div>
+        <p id="qr-upload-status" class="qr-upload-status">&#27491;&#22312;&#29983;&#25104;&#20108;&#32500;&#30721;...</p>
+        <a id="qr-upload-url" class="qr-upload-url" href="#" target="_blank" rel="noreferrer">&#25163;&#26426;&#26080;&#27861;&#25195;&#30721;&#26102;&#21487;&#25171;&#24320;&#27492;&#38142;&#25509;</a>
+      </div>
+    </div>
+
+    <script src="/static/app.js?v=20260629-camera-v2-mask1"></script>
+  </body>
+</html>
