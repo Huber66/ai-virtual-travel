@@ -54,6 +54,8 @@ const PRECOMPOSED_RESULT_FILE_RECORD_KEY = "precomposed-result-file";
 const MEDIAPIPE_BASE_PATH = "/static/vendor/mediapipe";
 const LANDSCAPE_BACKGROUND_WIDTH = 1920;
 const LANDSCAPE_BACKGROUND_HEIGHT = 1080;
+const CAMERA_CAPTURE_DELAY_SECONDS = 5;
+const CAPTURE_CAMERA_BUTTON_LABEL = captureCameraButton?.textContent || "拍照";
 
 let currentMode = "image";
 let selectedTemplate = null;
@@ -80,6 +82,7 @@ let qrUploadPollTimer = null;
 let qrUploadLastVersion = 0;
 let normalizedBackgroundFile = null;
 let normalizedBackgroundCacheKey = "";
+let cameraCaptureCountdownTimer = null;
 
 const SCENE_DEFINITIONS = {
   beijing: {
@@ -1282,6 +1285,7 @@ async function openQrUploadSession() {
 }
 
 function stopCameraStream() {
+  cancelCameraCaptureCountdown();
   if (cameraFrameRequest) {
     window.cancelAnimationFrame(cameraFrameRequest);
     cameraFrameRequest = null;
@@ -1296,6 +1300,21 @@ function stopCameraStream() {
   sourceCamera.classList.add("hidden");
   virtualCameraPreview?.classList.add("hidden");
   setCameraButtons(false);
+}
+
+function cancelCameraCaptureCountdown(message) {
+  if (!cameraCaptureCountdownTimer) {
+    return;
+  }
+  window.clearInterval(cameraCaptureCountdownTimer);
+  cameraCaptureCountdownTimer = null;
+  if (captureCameraButton) {
+    captureCameraButton.textContent = CAPTURE_CAMERA_BUTTON_LABEL;
+    captureCameraButton.disabled = !sourceCameraStream;
+  }
+  if (message) {
+    setOptionalText(cameraStatus, message);
+  }
 }
 
 async function openCamera() {
@@ -1412,6 +1431,37 @@ function capturePhotoFromCamera() {
       updateFlowState();
       syncActionButtons();
     });
+}
+
+function startCameraCaptureCountdown() {
+  if (cameraCaptureCountdownTimer) {
+    return;
+  }
+
+  if (!sourceCameraStream || !sourceCamera.videoWidth || !sourceCamera.videoHeight) {
+    setOptionalText(cameraStatus, "\u6444\u50cf\u5934\u753b\u9762\u8fd8\u6ca1\u6709\u51c6\u5907\u597d\uff0c\u8bf7\u7a0d\u5019\u518d\u62cd\u7167\u3002");
+    return;
+  }
+
+  let remainingSeconds = CAMERA_CAPTURE_DELAY_SECONDS;
+  captureCameraButton.disabled = true;
+  captureCameraButton.textContent = `${remainingSeconds}s`;
+  setOptionalText(cameraStatus, `${remainingSeconds} 秒后自动拍照，请保持姿势。`);
+
+  cameraCaptureCountdownTimer = window.setInterval(() => {
+    remainingSeconds -= 1;
+    if (remainingSeconds > 0) {
+      captureCameraButton.textContent = `${remainingSeconds}s`;
+      setOptionalText(cameraStatus, `${remainingSeconds} 秒后自动拍照，请保持姿势。`);
+      return;
+    }
+
+    window.clearInterval(cameraCaptureCountdownTimer);
+    cameraCaptureCountdownTimer = null;
+    captureCameraButton.textContent = CAPTURE_CAMERA_BUTTON_LABEL;
+    captureCameraButton.disabled = false;
+    capturePhotoFromCamera();
+  }, 1000);
 }
 
 function clearCapturedSource() {
@@ -1685,7 +1735,7 @@ qrUploadModal?.addEventListener("click", (event) => {
 });
 
 openCameraButton.addEventListener("click", openCamera);
-captureCameraButton.addEventListener("click", capturePhotoFromCamera);
+captureCameraButton.addEventListener("click", startCameraCaptureCountdown);
 closeCameraButton.addEventListener("click", () => {
   stopCameraStream();
   setOptionalText(cameraStatus, "摄像头已关闭，可重新打开或直接上传人物照。");
