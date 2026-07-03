@@ -487,6 +487,7 @@ def build_share_page(result_path: Path, image_url: str, download_url: str, share
     safe_share_url = html.escape(share_url)
     safe_download_url = html.escape(download_url)
     safe_image_url = html.escape(image_url)
+    share_url_json = json.dumps(share_url, ensure_ascii=False)
     return f"""<!DOCTYPE html>
 <html lang=\"zh-CN\">
     <head>
@@ -572,15 +573,20 @@ def build_share_page(result_path: Path, image_url: str, download_url: str, share
             }}
 
             .primary-action,
-            .secondary-action {{
+            .secondary-action,
+            .share-action {{
                 display: inline-flex;
                 justify-content: center;
                 align-items: center;
+                width: 100%;
                 min-height: 50px;
                 border-radius: 999px;
                 font-size: 15px;
                 font-weight: 800;
                 text-decoration: none;
+                appearance: none;
+                font-family: inherit;
+                cursor: pointer;
             }}
 
             .primary-action {{
@@ -594,13 +600,16 @@ def build_share_page(result_path: Path, image_url: str, download_url: str, share
                 color: var(--accent-strong);
             }}
 
-            .tips {{
-                margin-top: 16px;
-                padding: 14px 16px;
-                border-radius: 18px;
-                background: rgba(201, 122, 66, 0.08);
-                color: var(--muted);
-                font-size: 13px;
+            .share-action {{
+                border: 1px solid var(--line);
+                background: rgba(255, 255, 255, 0.84);
+                color: var(--accent-strong);
+            }}
+
+            .primary-action:active,
+            .secondary-action:active,
+            .share-action:active {{
+                transform: translateY(1px);
             }}
 
             .share-url {{
@@ -608,6 +617,14 @@ def build_share_page(result_path: Path, image_url: str, download_url: str, share
                 word-break: break-all;
                 color: var(--accent-strong);
                 font-size: 12px;
+            }}
+
+            .share-status {{
+                min-height: 18px;
+                margin-top: 8px;
+                color: var(--muted);
+                font-size: 12px;
+                text-align: center;
             }}
         </style>
     </head>
@@ -621,11 +638,62 @@ def build_share_page(result_path: Path, image_url: str, download_url: str, share
                 <div class=\"actions\">
                     <a class=\"primary-action\" href=\"{safe_download_url}\">下载原图</a>
                     <a class=\"secondary-action\" href=\"{safe_image_url}\" target=\"_blank\" rel=\"noreferrer\">查看大图</a>
+                    <button id=\"share-button\" class=\"share-action\" type=\"button\">分享</button>
                 </div>
-                <div class=\"tips\">如果手机无法打开这个页面，通常是因为当前二维码指向的是 localhost 或电脑不可访问的地址。此时请用电脑局域网 IP 打开页面，或设置环境变量 AICGFACE_PUBLIC_BASE_URL。</div>
+                <p id=\"share-status\" class=\"share-status\"></p>
                 <p class=\"share-url\">分享地址：{safe_share_url}</p>
             </section>
         </main>
+        <script>
+            const shareUrl = {share_url_json};
+            const shareButton = document.getElementById("share-button");
+            const shareStatus = document.getElementById("share-status");
+
+            async function copyShareUrl() {{
+                if (navigator.clipboard && window.isSecureContext) {{
+                    await navigator.clipboard.writeText(shareUrl);
+                    return true;
+                }}
+                const input = document.createElement("textarea");
+                input.value = shareUrl;
+                input.setAttribute("readonly", "");
+                input.style.position = "fixed";
+                input.style.left = "-9999px";
+                document.body.appendChild(input);
+                input.select();
+                const copied = document.execCommand("copy");
+                document.body.removeChild(input);
+                return copied;
+            }}
+
+            shareButton?.addEventListener("click", async () => {{
+                const payload = {{
+                    title: "文旅打卡成片",
+                    text: "我的 AIGC 文旅打卡成片已生成，快来看看吧。",
+                    url: shareUrl,
+                }};
+                try {{
+                    if (navigator.share) {{
+                        await navigator.share(payload);
+                        shareStatus.textContent = "已打开手机分享面板，可选择微信好友或朋友圈。";
+                        return;
+                    }}
+                    const copied = await copyShareUrl();
+                    shareStatus.textContent = copied
+                        ? "当前浏览器不支持直接分享，已复制分享链接。"
+                        : "当前浏览器不支持直接分享，请手动复制下方链接。";
+                }} catch (error) {{
+                    if (error?.name === "AbortError") {{
+                        shareStatus.textContent = "已取消分享。";
+                        return;
+                    }}
+                    const copied = await copyShareUrl().catch(() => false);
+                    shareStatus.textContent = copied
+                        ? "分享未成功，已为你复制链接。"
+                        : "分享未成功，请手动复制下方链接。";
+                }}
+            }});
+        </script>
     </body>
 </html>"""
 
