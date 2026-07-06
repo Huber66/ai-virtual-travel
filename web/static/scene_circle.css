@@ -990,6 +990,341 @@ button {
   }
 }
 
+@media (max-width: 760px), (orientation: portrait) and (max-width: 1180px) {
+  :root {
+    --stage-width: 100vw;
+    --stage-height: auto;
+  }
+
+  html,
+  body {
+    width: 100%;
+    min-height: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    overflow-y: auto;
+    background: #020817;
+  }
+
+  .scene-shell {
+    width: 100%;
+    min-height: 100dvh;
+    height: auto;
+    display: block;
+    padding: max(18px, env(safe-area-inset-top)) 14px max(24px, env(safe-area-inset-bottom));
+    overflow: hidden;
+  }
+
+  .scene-shell::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(circle at 50% 24%, rgba(143, 215, 255, 0.12), transparent 28%),
+      linear-gradient(180deg, transparent 0 72%, rgba(2, 8, 23, 0.38) 100%);
+    z-index: 0;
+  }
+
+  .aurora-grid {
+    background-size: 42px 42px;
+    opacity: 0.12;
+  }
+
+  .aurora-stars {
+    opacity: 0.26;
+  }
+
+  .scene-stage {
+    width: 100%;
+    min-height: calc(100dvh - 42px);
+    height: auto;
+    overflow: visible;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    align-items: start;
+  }
+
+  .scene-stage::before {
+    top: 48%;
+    width: min(92vw, 440px);
+    height: min(92vw, 440px);
+    opacity: 0.78;
+  }
+
+  .scene-stage::after {
+    top: 48%;
+    width: min(94vw, 420px);
+    height: 180px;
+    opacity: 0.7;
+  }
+
+  .scene-heading {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: 100%;
+    margin: clamp(18px, 4dvh, 36px) auto clamp(20px, 4dvh, 34px);
+    transform: none;
+    animation: none;
+  }
+
+  .scene-kicker {
+    margin-bottom: 14px;
+    font-size: clamp(12px, 3.4vw, 16px);
+    letter-spacing: 0.24em;
+  }
+
+  .scene-title {
+    gap: 10px;
+  }
+
+  .scene-title span {
+    max-width: 100%;
+    white-space: nowrap;
+    font-size: clamp(34px, 10vw, 54px);
+    line-height: 1.02;
+  }
+
+  .scene-title small {
+    font-size: clamp(15px, 4.2vw, 22px);
+    letter-spacing: 0.08em;
+  }
+
+  .module-view,
+  .background-view {
+    position: relative;
+    min-height: auto;
+  }
+
+  .module-orbit {
+    position: relative;
+    inset: auto;
+    width: min(100%, 344px);
+    min-height: 0;
+    margin: 0 auto;
+    padding: 2px 2px 10px;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(14px, 3.6vw, 22px) clamp(10px, 3.2vw, 18px);
+    align-items: start;
+    justify-items: center;
+  }
+
+  .hologram-rings {
+    left: 50%;
+    top: clamp(292px, 43dvh, 390px);
+    width: min(76vw, 330px);
+    height: min(76vw, 330px);
+    opacity: 0.72;
+    animation: none;
+  }
+
+  .hologram-ring-two {
+    inset: 38px;
+  }
+
+  .hologram-ring-three {
+    inset: 76px;
+  }
+
+  .hologram-ring-four {
+    inset: 112px;
+  }
+
+  .module-item,
+  .module-item-large,
+  .module-item-hero {
+    position: relative !important;
+    left: auto !important;
+    top: auto !important;
+    width: clamp(106px, 30vw, 138px);
+    height: clamp(106px, 30vw, 138px);
+    transform: none;
+    animation: none;
+    opacity: 1;
+    filter: none;
+  }
+
+  .module-item {
+    --orb-size: clamp(106px, 30vw, 138px);
+  }
+
+  .module-item:hover,
+  .module-item.active {
+    transform: translateY(-3px) scale(1.025);
+  }
+
+  .module-item-center {
+    order: 1;
+    grid-column: 1 / -1;
+    width: clamp(132px, 36vw, 168px);
+    height: clamp(132px, 36vw, 168px);
+    margin-bottom: 6px;
+  }
+
+  .module-item[data-scene="beijing"] {
+    order: 2;
+  }
+
+  .module-item[data-scene="xian"] {
+    order: 3;
+  }
+
+  .module-item[data-scene="virtual"] {
+    order: 4;
+  }
+
+  .module-item[data-scene="henan"] {
+    order: 5;
+  }
+
+  .module-item[data-scene="world"] {
+    order: 6;
+  }
+
+  .module-item[data-scene="japan"] {
+    order: 7;
+    grid-column: 1 / -1;
+  }
+
+  .module-label {
+    min-width: min(108px, 32vw);
+    max-width: min(132px, 38vw);
+    bottom: -8px;
+    padding: 8px 12px;
+  }
+
+  .module-label strong {
+    font-size: clamp(15px, 4.4vw, 20px);
+  }
+
+  .module-label small {
+    font-size: clamp(10px, 3.2vw, 13px);
+  }
+
+  .module-hub {
+    gap: 10px;
+  }
+
+  .module-hub-lens {
+    width: clamp(58px, 17vw, 78px);
+    height: clamp(58px, 17vw, 78px);
+    border-width: 8px;
+  }
+
+  .module-hub-copy strong {
+    font-size: clamp(24px, 6.6vw, 32px);
+  }
+
+  .module-hub-copy small {
+    font-size: clamp(11px, 3.2vw, 14px);
+  }
+
+  .background-view {
+    min-height: calc(100dvh - 116px);
+    padding-top: 58px;
+  }
+
+  .back-theme-button {
+    left: 0;
+    top: 0;
+    min-width: 96px;
+    padding: 10px 18px;
+  }
+
+  .background-carousel {
+    position: relative;
+    left: auto;
+    top: auto;
+    width: min(100%, 560px);
+    height: min(58dvh, 520px);
+    min-height: 430px;
+    margin: 0 auto;
+    transform: none;
+  }
+
+  .background-carousel::before {
+    width: min(76vw, 360px);
+    height: min(50vw, 240px);
+  }
+
+  .background-item.is-selected {
+    width: clamp(176px, 45vw, 238px);
+    height: clamp(176px, 45vw, 238px);
+  }
+
+  .background-item.is-near {
+    width: clamp(96px, 26vw, 124px);
+    height: clamp(96px, 26vw, 124px);
+  }
+
+  .background-item.is-far,
+  .background-item.is-bottom {
+    width: clamp(68px, 18vw, 90px);
+    height: clamp(68px, 18vw, 90px);
+  }
+
+  .nav-arrow {
+    top: 40%;
+    width: 46px;
+    height: 104px;
+  }
+
+  .nav-arrow::before {
+    border-top-width: 42px;
+    border-bottom-width: 42px;
+  }
+
+  .nav-arrow-left::before {
+    right: 12px;
+    border-right-width: 26px;
+  }
+
+  .nav-arrow-right::before {
+    left: 12px;
+    border-left-width: 26px;
+  }
+
+  .shoot-actions {
+    position: relative;
+    left: auto;
+    top: auto;
+    transform: none;
+    margin: -26px auto 0;
+  }
+
+  .start-shooting-button {
+    min-width: min(220px, 68vw);
+    padding: 13px 28px 14px;
+  }
+}
+
+@media (max-width: 380px) {
+  .scene-shell {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+
+  .module-orbit {
+    gap: 16px 10px;
+  }
+
+  .module-item,
+    .module-item-large,
+  .module-item-hero {
+    width: clamp(100px, 31vw, 118px);
+    height: clamp(100px, 31vw, 118px);
+  }
+
+  .module-item-center {
+    width: clamp(126px, 38vw, 148px);
+    height: clamp(126px, 38vw, 148px);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

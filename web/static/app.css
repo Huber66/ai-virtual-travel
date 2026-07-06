@@ -1176,3 +1176,207 @@ body::before {
     border-radius: 24px;
   }
 }
+
+@media (max-width: 760px), (orientation: portrait) and (max-width: 1180px) {
+  html,
+  body {
+    width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    min-height: 100dvh;
+    overflow-y: auto;
+  }
+
+  body::before {
+    background-size: 46px 46px;
+    opacity: 0.7;
+  }
+
+  .page-shell {
+    width: 100%;
+    min-height: 100dvh;
+    padding: max(10px, env(safe-area-inset-top)) 10px max(14px, env(safe-area-inset-bottom));
+  }
+
+  .studio-grid,
+  .studio-grid-input-only {
+    display: block;
+  }
+
+  .panel.upload-panel {
+    min-height: calc(100dvh - 24px);
+    padding: 10px;
+    border-radius: 22px;
+    background:
+      linear-gradient(180deg, rgba(22, 31, 58, 0.76), rgba(12, 17, 36, 0.72)),
+      rgba(8, 13, 28, 0.82);
+  }
+
+  .upload-panel > .panel-header {
+    display: none;
+  }
+
+  #upload-workbench.preview-grid {
+    display: block;
+  }
+
+  #upload-workbench .background-mode-shell {
+    display: none !important;
+  }
+
+  #upload-workbench .source-dropzone {
+    min-height: calc(100dvh - 44px);
+    padding: 10px;
+    gap: 10px;
+    border-radius: 20px;
+    grid-template-rows: auto minmax(0, 1fr);
+  }
+
+  #upload-workbench .source-dropzone .dropzone-head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    align-items: stretch;
+    min-width: 0;
+  }
+
+  #upload-workbench .source-dropzone .dropzone-head > div:first-child {
+    display: none;
+  }
+
+  #upload-workbench .camera-toolbar-head {
+    width: 100%;
+    min-width: 0;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  #upload-workbench .camera-toolbar-head .secondary-button,
+  #upload-workbench .camera-toolbar-head input[type="file"],
+  #upload-workbench .camera-toolbar-head input[type="file"]::file-selector-button,
+  .workbench-scene-actions #scene-switch-top,
+  .workbench-scene-actions #submit-button {
+    width: 100%;
+    min-width: 0;
+    min-height: 38px;
+    height: 38px;
+    padding: 8px 10px;
+    border-radius: 999px;
+    font-size: 13px;
+    line-height: 1;
+  }
+
+  #upload-workbench .camera-toolbar-head input[type="file"] {
+    padding: 0;
+    overflow: hidden;
+  }
+
+  #upload-workbench .camera-toolbar-head input[type="file"]::file-selector-button {
+    margin: 0;
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+  }
+
+  .workbench-scene-actions {
+    position: static;
+    width: 100%;
+    min-width: 0;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .workbench-scene-actions #custom-upload-shell {
+    grid-column: 1 / -1;
+  }
+
+  .workbench-scene-actions .custom-upload-row {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  .workbench-scene-actions #target-image,
+  .workbench-scene-actions #target-image::file-selector-button {
+    width: 100%;
+  }
+
+  #upload-workbench .source-dropzone .preview-shell {
+    width: 100%;
+    min-height: 0;
+    max-height: none;
+    align-self: stretch;
+    justify-self: stretch;
+    border-radius: 18px;
+  }
+
+  #upload-workbench .source-dropzone .preview-shell:not(.has-background-aspect) {
+    min-height: calc(100dvh - 232px);
+  }
+
+  #upload-workbench .source-dropzone .preview-shell.has-background-aspect {
+    width: 100%;
+    max-width: 100%;
+    align-self: start;
+  }
+
+  #upload-workbench .source-dropzone .preview-shell.is-portrait-background {
+    width: min(100%, calc((100dvh - 196px) * var(--selected-background-ratio, 0.5625)));
+    justify-self: center;
+  }
+
+  #upload-workbench .source-dropzone .preview,
+  #upload-workbench .source-dropzone .preview-shell.has-background-aspect .preview {
+    width: 100%;
+    height: 100%;
+    max-height: calc(100dvh - 196px);
+    border-radius: 18px;
+  }
+
+  #source-preview {
+    object-position: center;
+  }
+
+  #upload-workbench .source-dropzone .camera-status {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 14px;
+    z-index: 4;
+    margin: 0;
+    padding: 8px 12px;
+    border-radius: 999px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    background: rgba(6, 11, 24, 0.68);
+    color: rgba(245, 247, 251, 0.78);
+    backdrop-filter: blur(12px);
+  }
+
+  .actions,
+  #gallery-shell {
+    display: none !important;
+  }
+
+  .qr-upload-modal {
+    padding: 16px;
+  }
+
+  .qr-upload-panel {
+    width: min(100%, 430px);
+    padding: 18px;
+    border-radius: 24px;
+  }
+
+  .qr-upload-head p {
+    white-space: nowrap;
+    font-size: 13px;
+  }
+
+  .qr-upload-code-shell {
+    width: min(230px, 64vw);
+    height: min(230px, 64vw);
+  }
+}
