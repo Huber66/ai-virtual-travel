@@ -362,7 +362,7 @@ button {
 }
 
 .module-item-center {
-  --orb-size: clamp(188px, 13.6vw, 246px);
+  --orb-size: clamp(158px, 11.4vw, 208px);
   border-radius: 50%;
   background:
     radial-gradient(circle at 50% 36%, rgba(255, 255, 255, 0.22), transparent 28%),
@@ -506,7 +506,7 @@ button {
   display: grid;
   place-items: center;
   align-content: center;
-  gap: 16px;
+  gap: 12px;
 }
 
 .module-hub::before,
@@ -530,10 +530,10 @@ button {
 }
 
 .module-hub-lens {
-  width: clamp(70px, 5.5vw, 96px);
-  height: clamp(70px, 5.5vw, 96px);
+  width: clamp(56px, 4.6vw, 78px);
+  height: clamp(56px, 4.6vw, 78px);
   border-radius: 50%;
-  border: 10px solid rgba(255, 255, 255, 0.88);
+  border: 8px solid rgba(255, 255, 255, 0.88);
   box-shadow:
     0 0 0 14px rgba(255, 255, 255, 0.05),
     0 0 34px rgba(143, 215, 255, 0.22),
@@ -548,7 +548,7 @@ button {
 }
 
 .module-hub-copy strong {
-  font-size: clamp(22px, 1.8vw, 32px);
+  font-size: clamp(19px, 1.55vw, 28px);
   line-height: 1;
   font-weight: 900;
 }

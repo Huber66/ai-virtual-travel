@@ -1,5 +1,5 @@
 const themeItems = [
-  { id: "custom", key: "custom", titleCn: "\u81ea\u5b9a\u4e49", titleEn: "Custom", label: "\u81ea\u5b9a\u4e49", subtitle: "Custom", image: "/template-thumbs/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9B%BE%E6%A0%87.webp", position: { x: 50, y: 57 }, size: "hub", active: true, keywords: [] },
+  { id: "custom", key: "custom", titleCn: "\u81ea\u5b9a\u4e49", titleEn: "Custom", label: "\u81ea\u5b9a\u4e49", subtitle: "Custom", image: "/template-thumbs/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9B%BE%E6%A0%87.webp", position: { x: 50, y: 52 }, size: "hub", active: true, keywords: [] },
   { id: "beijing", key: "beijing", titleCn: "\u5317\u4eac", titleEn: "Beijing", label: "\u5317\u4eac", subtitle: "Beijing", image: "/template-thumbs/%E6%95%85%E5%AE%AB.webp", position: { x: 50, y: 25 }, size: "hero", active: false, keywords: ["\u6545\u5bab", "\u5929\u5b89\u95e8", "\u9890\u548c\u56ed", "\u516b\u8fbe\u5cad", "\u957f\u57ce", "\u6c34\u7acb\u65b9", "\u9e1f\u5de2", "\u5929\u575b", "\u5706\u660e\u56ed"] },
   { id: "xian", key: "xian", titleCn: "\u897f\u5b89", titleEn: "Xi'an", label: "\u897f\u5b89", subtitle: "Xi'an", image: "/template-thumbs/%E8%A5%BF%E5%AE%89%E5%85%B5%E9%A9%AC%E4%BF%91.webp", position: { x: 72, y: 37 }, size: "large", active: false, keywords: ["\u5175\u9a6c\u4fd1", "\u897f\u5b89", "\u5927\u96c1\u5854", "\u5927\u96c1\u697c", "\u949f\u697c", "\u57ce\u5899"] },
   { id: "henan", key: "henan", titleCn: "\u6cb3\u5357", titleEn: "Henan", label: "\u6cb3\u5357", subtitle: "Henan", image: "/template-thumbs/%E5%B0%91%E6%9E%97%E5%AF%BA.webp", position: { x: 72, y: 66 }, size: "large", active: false, keywords: ["\u5c11\u6797\u5bfa", "\u9f99\u95e8\u77f3\u7a9f", "\u6cb3\u5357", "\u6d1b\u9633", "\u5f00\u5c01"] },
@@ -92,9 +92,10 @@ function setTitle(scene, template) {
 function syncCenterCopy(scene) {
   const centerTitle = document.getElementById("center-active-title");
   const centerSubtitle = document.getElementById("center-active-subtitle");
-  if (!centerTitle || !centerSubtitle || !scene) return;
-  centerTitle.textContent = scene.label;
-  centerSubtitle.textContent = scene.subtitle;
+  const customScene = SCENES.find((item) => item.key === "custom");
+  if (!centerTitle || !centerSubtitle || !customScene) return;
+  centerTitle.textContent = customScene.label;
+  centerSubtitle.textContent = customScene.subtitle;
 }
 
 function selectModuleScene(scene, shouldUpdateTitle = true) {
@@ -123,8 +124,8 @@ function buildModuleItem(scene, isCenter = false, index = 0) {
       <span class="module-hub" aria-hidden="true">
         <span class="module-hub-lens"></span>
         <span class="module-hub-copy">
-          <strong id="center-active-title">${selectedModuleScene.label}</strong>
-          <small id="center-active-subtitle">${selectedModuleScene.subtitle}</small>
+          <strong id="center-active-title">${scene.label}</strong>
+          <small id="center-active-subtitle">${scene.subtitle}</small>
         </span>
       </span>
     `
