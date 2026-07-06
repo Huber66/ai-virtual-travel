@@ -35,6 +35,7 @@ let activeScene = null;
 let selectedModuleScene = SCENES.find((scene) => scene.key === "custom") || SCENES[0];
 let sceneBackgrounds = [];
 let activeBackgroundIndex = 0;
+let templatesReadyPromise = null;
 
 function isCustomTemplate(template) {
   return /(?:\u81ea\u5b9a\u4e49|custom)/i.test(`${template.label || ""} ${template.name || ""}`);
@@ -60,6 +61,13 @@ function sortedTemplatesForScene(scene) {
       const rank = getTemplateRank(left, scene) - getTemplateRank(right, scene);
       return rank || (left.label || "").localeCompare(right.label || "", "zh-CN");
     });
+}
+
+async function ensureTemplatesReady() {
+  if (!templatesReadyPromise) {
+    templatesReadyPromise = loadTemplates();
+  }
+  await templatesReadyPromise;
 }
 
 function refreshScenePreviewImages() {
@@ -190,12 +198,22 @@ function renderBackgrounds() {
   startShootingButton.disabled = false;
 }
 
-function enterBackgroundSelection(scene) {
+async function enterBackgroundSelection(scene) {
   activeScene = scene;
-  sceneBackgrounds = sortedTemplatesForScene(scene);
+  sceneBackgrounds = [];
   activeBackgroundIndex = 0;
+  backgroundOrbit.innerHTML = "";
+  startShootingButton.disabled = true;
   moduleView.classList.add("hidden");
   backgroundView.classList.remove("hidden");
+
+  await ensureTemplatesReady();
+  if (activeScene?.key !== scene.key) {
+    return;
+  }
+
+  sceneBackgrounds = sortedTemplatesForScene(scene);
+  activeBackgroundIndex = 0;
   if (!sceneBackgrounds.length && scene.key === "custom") {
     window.location.assign(`/studio?scene=custom&v=${Date.now()}`);
     return;
@@ -242,4 +260,5 @@ backThemeButton.addEventListener("click", returnToModules);
 prevBackgroundButton.addEventListener("click", () => shiftBackground(-1));
 nextBackgroundButton.addEventListener("click", () => shiftBackground(1));
 startShootingButton.addEventListener("click", startShooting);
-loadTemplates().then(renderModules);
+templatesReadyPromise = loadTemplates();
+templatesReadyPromise.then(renderModules);
