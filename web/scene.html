@@ -4,10 +4,19 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>&#36873;&#25321;&#25293;&#25668;&#22330;&#26223;</title>
-    <link rel="stylesheet" href="/static/scene_circle.css?v=20260629-asakusa1" />
+    <link rel="stylesheet" href="/static/scene_circle.css?v=20260703-portrait-ui1" />
   </head>
   <body>
     <main class="scene-shell">
+      <div class="background-aurora" aria-hidden="true">
+        <span class="aurora-orb aurora-orb-blue"></span>
+        <span class="aurora-orb aurora-orb-purple"></span>
+        <span class="aurora-orb aurora-orb-cyan"></span>
+        <span class="aurora-grid"></span>
+        <span class="aurora-stars"></span>
+        <span class="aurora-scanline"></span>
+      </div>
+
       <section class="scene-stage" aria-label="&#25293;&#25668;&#20027;&#39064;&#19982;&#32972;&#26223;&#36873;&#25321;">
         <div class="scene-heading">
           <p class="scene-kicker">AIGC TRAVEL STUDIO</p>
@@ -17,21 +26,26 @@
           </h1>
         </div>
 
-        <div class="scene-banner" id="scene-banner">&#22810;&#31181;&#20027;&#39064;&#39118;&#26223;&#36873;&#25321;</div>
-
         <section id="module-view" class="module-view" aria-label="&#20027;&#39064;&#27169;&#22359;">
+          <div class="hologram-rings" aria-hidden="true">
+            <span class="hologram-ring hologram-ring-one"></span>
+            <span class="hologram-ring hologram-ring-two"></span>
+            <span class="hologram-ring hologram-ring-three"></span>
+            <span class="hologram-ring hologram-ring-four"></span>
+            <span class="hologram-glow"></span>
+          </div>
           <div class="module-orbit" id="module-orbit"></div>
         </section>
 
         <section id="background-view" class="background-view hidden" aria-label="&#20027;&#39064;&#32972;&#26223;">
-          <button id="back-theme-button" class="back-theme-button" type="button">&#36820;&#22238;</button>
+          <button id="back-theme-button" class="back-theme-button liquid-glass" type="button">&#36820;&#22238;</button>
           <div class="background-carousel">
             <button id="prev-background-button" class="nav-arrow nav-arrow-left" type="button" aria-label="&#19978;&#19968;&#20010;&#32972;&#26223;"></button>
             <div id="background-orbit" class="background-orbit"></div>
             <button id="next-background-button" class="nav-arrow nav-arrow-right" type="button" aria-label="&#19979;&#19968;&#20010;&#32972;&#26223;"></button>
           </div>
           <div class="shoot-actions">
-            <button id="start-shooting-button" class="start-shooting-button" type="button" disabled>
+            <button id="start-shooting-button" class="start-shooting-button liquid-glass-strong" type="button" disabled>
               <span>&#24320;&#22987;&#25293;&#29031;</span>
               <small>START SHOOTING</small>
             </button>
@@ -40,6 +54,6 @@
       </section>
     </main>
 
-    <script src="/static/scene_circle.js?v=20260629-asakusa1"></script>
+    <script src="/static/scene_circle.js?v=20260703-portrait-ui1"></script>
   </body>
 </html>
