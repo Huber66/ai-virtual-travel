@@ -1,22 +1,409 @@
 const themeItems = [
-  { id: "custom", key: "custom", titleCn: "\u81ea\u5b9a\u4e49", titleEn: "Custom", label: "\u81ea\u5b9a\u4e49", subtitle: "Custom", image: "/template-thumbs/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9B%BE%E6%A0%87.webp", position: { x: 50, y: 52 }, size: "hub", active: true, keywords: [] },
-  { id: "beijing", key: "beijing", titleCn: "\u5317\u4eac", titleEn: "Beijing", label: "\u5317\u4eac", subtitle: "Beijing", image: "/template-thumbs/%E6%95%85%E5%AE%AB.webp", position: { x: 50, y: 25 }, size: "hero", active: false, keywords: ["\u6545\u5bab", "\u5929\u5b89\u95e8", "\u9890\u548c\u56ed", "\u516b\u8fbe\u5cad", "\u957f\u57ce", "\u6c34\u7acb\u65b9", "\u9e1f\u5de2", "\u5929\u575b", "\u5706\u660e\u56ed"] },
-  { id: "xian", key: "xian", titleCn: "\u897f\u5b89", titleEn: "Xi'an", label: "\u897f\u5b89", subtitle: "Xi'an", image: "/template-thumbs/%E8%A5%BF%E5%AE%89%E5%85%B5%E9%A9%AC%E4%BF%91.webp", position: { x: 72, y: 37 }, size: "large", active: false, keywords: ["\u5175\u9a6c\u4fd1", "\u897f\u5b89", "\u5927\u96c1\u5854", "\u5927\u96c1\u697c", "\u949f\u697c", "\u57ce\u5899"] },
-  { id: "henan", key: "henan", titleCn: "\u6cb3\u5357", titleEn: "Henan", label: "\u6cb3\u5357", subtitle: "Henan", image: "/template-thumbs/%E5%B0%91%E6%9E%97%E5%AF%BA.webp", position: { x: 72, y: 66 }, size: "large", active: false, keywords: ["\u5c11\u6797\u5bfa", "\u9f99\u95e8\u77f3\u7a9f", "\u6cb3\u5357", "\u6d1b\u9633", "\u5f00\u5c01"] },
-  { id: "japan", key: "japan", titleCn: "\u65e5\u672c", titleEn: "Japan", label: "\u65e5\u672c", subtitle: "Japan", image: "/template-thumbs/%E6%97%A5%E6%9C%AC%E5%AF%8C%E5%A3%AB%E5%B1%B1.webp", position: { x: 50, y: 79 }, size: "large", active: false, keywords: ["\u5bcc\u58eb\u5c71", "\u65e5\u672c", "\u4e1c\u4eac", "\u6d45\u8349\u5bfa", "\u4eac\u90fd", "\u5927\u962a", "\u5948\u826f", "\u6a31"] },
-  { id: "world", key: "world", titleCn: "\u4e16\u754c\u540d\u80dc", titleEn: "World", label: "\u4e16\u754c\u540d\u80dc", subtitle: "World", image: "/template-thumbs/%E5%9F%83%E8%8F%B2%E5%B0%94%E9%93%81%E5%A1%94.webp", position: { x: 28, y: 66 }, size: "large", active: false, keywords: ["\u57c3\u83f2\u5c14", "\u6bd4\u8428", "\u6597\u517d\u573a", "\u7f57\u9a6c", "\u91d1\u5b57\u5854", "\u57c3\u53ca", "\u5df4\u9ece", "\u4f26\u6566", "\u7ebd\u7ea6", "\u5a01\u5c3c\u65af", "\u96c5\u5178", "\u5723\u6258\u91cc\u5c3c", "\u8fea\u62dc", "\u83ab\u65af\u79d1", "\u610f\u5927\u5229", "\u6cd5\u56fd"] },
-  { id: "virtual", key: "virtual", titleCn: "\u865a\u62df\u80cc\u666f", titleEn: "Virtual", label: "\u865a\u62df\u80cc\u666f", subtitle: "Virtual", image: "/template-thumbs/%E5%8A%A8%E6%BC%AB%E8%83%8C%E6%99%AF1.webp", position: { x: 28, y: 37 }, size: "large", active: false, keywords: ["\u52a8\u6f2b", "\u5361\u901a", "\u8d5b\u535a", "\u865a\u62df", "\u4e8c\u6b21\u5143", "\u63d2\u753b", "\u68a6\u5e7b", "\u672a\u6765", "\u50cf\u7d20", "\u7ae5\u8bdd"] },
+  {
+    "id": "custom",
+    "key": "custom",
+    "titleCn": "\u81ea\u5b9a\u4e49",
+    "titleEn": "Custom",
+    "label": "\u81ea\u5b9a\u4e49",
+    "subtitle": "Custom",
+    "image": "/template-thumbs/%E8%87%AA%E5%AE%9A%E4%B9%89%E5%9B%BE%E6%A0%87.webp",
+    "position": {
+      "x": 50,
+      "y": 52
+    },
+    "size": "hub",
+    "active": true,
+    "keywords": []
+  },
+  {
+    "id": "beijing",
+    "key": "beijing",
+    "titleCn": "\u5317\u4eac",
+    "titleEn": "Beijing",
+    "label": "\u5317\u4eac",
+    "subtitle": "Beijing",
+    "image": "/template-thumbs/%E5%8C%97%E4%BA%AC/%E6%95%85%E5%AE%AB.webp",
+    "position": {
+      "x": 50,
+      "y": 22
+    },
+    "size": "hero",
+    "active": false,
+    "keywords": [
+      "\u5317\u4eac",
+      "\u6545\u5bab",
+      "\u5929\u5b89\u95e8",
+      "\u9890\u548c\u56ed",
+      "\u516b\u8fbe\u5cad",
+      "\u957f\u57ce",
+      "\u6c34\u7acb\u65b9",
+      "\u9e1f\u5de2",
+      "\u5929\u575b",
+      "\u5706\u660e\u56ed"
+    ]
+  },
+  {
+    "id": "xian",
+    "key": "xian",
+    "titleCn": "\u897f\u5b89",
+    "titleEn": "Xi'an",
+    "label": "\u897f\u5b89",
+    "subtitle": "Xi'an",
+    "image": "/template-thumbs/%E8%A5%BF%E5%AE%89/%E8%A5%BF%E5%AE%89%E5%85%B5%E9%A9%AC%E4%BF%91.webp",
+    "position": {
+      "x": 72,
+      "y": 32
+    },
+    "size": "large",
+    "active": false,
+    "keywords": [
+      "\u897f\u5b89",
+      "\u5175\u9a6c\u4fd1",
+      "\u5927\u96c1\u5854",
+      "\u5927\u96c1\u697c",
+      "\u949f\u697c",
+      "\u57ce\u5899"
+    ]
+  },
+  {
+    "id": "henan",
+    "key": "henan",
+    "titleCn": "\u6cb3\u5357",
+    "titleEn": "Henan",
+    "label": "\u6cb3\u5357",
+    "subtitle": "Henan",
+    "image": "/template-thumbs/%E6%B2%B3%E5%8D%97/%E5%B0%91%E6%9E%97%E5%AF%BA.webp",
+    "position": {
+      "x": 79,
+      "y": 54
+    },
+    "size": "medium",
+    "active": false,
+    "keywords": [
+      "\u6cb3\u5357",
+      "\u5c11\u6797\u5bfa",
+      "\u9f99\u95e8\u77f3\u7a9f",
+      "\u6d1b\u9633",
+      "\u5f00\u5c01"
+    ]
+  },
+  {
+    "id": "world",
+    "key": "world",
+    "titleCn": "\u4e16\u754c\u540d\u80dc",
+    "titleEn": "World",
+    "label": "\u4e16\u754c\u540d\u80dc",
+    "subtitle": "World",
+    "image": "/template-thumbs/%E4%B8%96%E7%95%8C%E5%90%8D%E8%83%9C/%E5%9F%83%E8%8F%B2%E5%B0%94%E9%93%81%E5%A1%94.webp",
+    "position": {
+      "x": 23,
+      "y": 59
+    },
+    "size": "large",
+    "active": false,
+    "keywords": [
+      "\u4e16\u754c\u540d\u80dc",
+      "\u57c3\u83f2\u5c14",
+      "\u6bd4\u8428",
+      "\u6597\u517d\u573a",
+      "\u7f57\u9a6c",
+      "\u91d1\u5b57\u5854",
+      "\u57c3\u53ca",
+      "\u5df4\u9ece",
+      "\u4f26\u6566",
+      "\u7ebd\u7ea6",
+      "\u5a01\u5c3c\u65af",
+      "\u96c5\u5178",
+      "\u5723\u6258\u91cc\u5c3c",
+      "\u8fea\u62dc",
+      "\u83ab\u65af\u79d1",
+      "\u610f\u5927\u5229",
+      "\u6cd5\u56fd",
+      "\u65e5\u672c",
+      "\u5bcc\u58eb\u5c71",
+      "\u4e1c\u4eac",
+      "\u6d45\u8349\u5bfa",
+      "\u4eac\u90fd",
+      "\u5927\u962a",
+      "\u5948\u826f",
+      "\u6a31"
+    ]
+  },
+  {
+    "id": "virtual",
+    "key": "virtual",
+    "titleCn": "\u865a\u62df\u80cc\u666f",
+    "titleEn": "Virtual",
+    "label": "\u865a\u62df\u80cc\u666f",
+    "subtitle": "Virtual",
+    "image": "/template-thumbs/%E8%99%9A%E6%8B%9F%E8%83%8C%E6%99%AF/%E5%8A%A8%E6%BC%AB%E8%83%8C%E6%99%AF1.webp",
+    "position": {
+      "x": 25,
+      "y": 35
+    },
+    "size": "medium",
+    "active": false,
+    "keywords": [
+      "\u865a\u62df\u80cc\u666f",
+      "\u52a8\u6f2b",
+      "\u5361\u901a",
+      "\u8d5b\u535a",
+      "\u865a\u62df",
+      "\u4e8c\u6b21\u5143",
+      "\u63d2\u753b",
+      "\u68a6\u5e7b",
+      "\u672a\u6765",
+      "\u50cf\u7d20",
+      "\u7ae5\u8bdd"
+    ]
+  },
+  {
+    "id": "guizhou",
+    "key": "guizhou",
+    "titleCn": "\u8d35\u5dde",
+    "titleEn": "Guizhou",
+    "label": "\u8d35\u5dde",
+    "subtitle": "Guizhou",
+    "image": "/template-thumbs/%E8%B4%B5%E5%B7%9E/%E6%A2%B5%E5%87%80%E5%B1%B1.webp",
+    "position": {
+      "x": 38,
+      "y": 33
+    },
+    "size": "small",
+    "active": false,
+    "keywords": [
+      "\u8d35\u5dde",
+      "\u68b5\u51c0\u5c71",
+      "\u9ec4\u679c\u6811",
+      "\u8354\u6ce2",
+      "\u5c0f\u4e03\u5b54",
+      "\u897f\u6c5f",
+      "\u82d7\u5be8",
+      "\u7ec7\u91d1\u6d1e"
+    ]
+  },
+  {
+    "id": "jiangxi",
+    "key": "jiangxi",
+    "titleCn": "\u6c5f\u897f",
+    "titleEn": "Jiangxi",
+    "label": "\u6c5f\u897f",
+    "subtitle": "Jiangxi",
+    "image": "/template-thumbs/%E6%B1%9F%E8%A5%BF/%E6%BB%95%E7%8E%8B%E9%98%81.webp",
+    "position": {
+      "x": 61,
+      "y": 31
+    },
+    "size": "small",
+    "active": false,
+    "keywords": [
+      "\u6c5f\u897f",
+      "\u4e95\u5188\u5c71",
+      "\u6ed5\u738b\u9601",
+      "\u5a7a\u6e90",
+      "\u5fbd\u6d3e"
+    ]
+  },
+  {
+    "id": "nanjing",
+    "key": "nanjing",
+    "titleCn": "\u5357\u4eac",
+    "titleEn": "Nanjing",
+    "label": "\u5357\u4eac",
+    "subtitle": "Nanjing",
+    "image": "/template-thumbs/%E5%8D%97%E4%BA%AC/%E5%A4%AB%E5%AD%90%E5%BA%99.webp",
+    "position": {
+      "x": 66,
+      "y": 72
+    },
+    "size": "medium",
+    "active": false,
+    "keywords": [
+      "\u5357\u4eac",
+      "\u592b\u5b50\u5e99",
+      "\u7075\u8c37\u5bfa",
+      "\u660e\u5b5d\u9675"
+    ]
+  },
+  {
+    "id": "sichuan",
+    "key": "sichuan",
+    "titleCn": "\u56db\u5ddd",
+    "titleEn": "Sichuan",
+    "label": "\u56db\u5ddd",
+    "subtitle": "Sichuan",
+    "image": "/template-thumbs/%E5%9B%9B%E5%B7%9D/%E4%B9%9D%E5%AF%A8%E6%B2%9F.webp",
+    "position": {
+      "x": 40,
+      "y": 74
+    },
+    "size": "medium",
+    "active": false,
+    "keywords": [
+      "\u56db\u5ddd",
+      "\u5b89\u4ec1",
+      "\u4e5d\u5be8\u6c9f",
+      "\u4e50\u5c71",
+      "\u5927\u4f5b"
+    ]
+  },
+  {
+    "id": "wuhan",
+    "key": "wuhan",
+    "titleCn": "\u6b66\u6c49",
+    "titleEn": "Wuhan",
+    "label": "\u6b66\u6c49",
+    "subtitle": "Wuhan",
+    "image": "/template-thumbs/%E6%AD%A6%E6%B1%89/%E5%8F%A4%E7%90%B4%E5%8F%B0.webp",
+    "position": {
+      "x": 83,
+      "y": 42
+    },
+    "size": "small",
+    "active": false,
+    "keywords": [
+      "\u6b66\u6c49",
+      "\u53e4\u7434\u53f0",
+      "\u6674\u5ddd\u9601"
+    ]
+  },
+  {
+    "id": "yunnan",
+    "key": "yunnan",
+    "titleCn": "\u4e91\u5357",
+    "titleEn": "Yunnan",
+    "label": "\u4e91\u5357",
+    "subtitle": "Yunnan",
+    "image": "/template-thumbs/%E4%BA%91%E5%8D%97/%E7%8E%89%E9%BE%99%E9%9B%AA%E5%B1%B1.webp",
+    "position": {
+      "x": 17,
+      "y": 45
+    },
+    "size": "small",
+    "active": false,
+    "keywords": [
+      "\u4e91\u5357",
+      "\u5927\u7406",
+      "\u6d31\u6d77",
+      "\u9999\u683c\u91cc\u62c9",
+      "\u7389\u9f99\u96ea\u5c71"
+    ]
+  }
 ];
 
 const SCENES = themeItems;
 
 const ORDER_HINTS = {
-  beijing: ["\u6545\u5bab", "\u5929\u5b89\u95e8", "\u9890\u548c\u56ed", "\u516b\u8fbe\u5cad", "\u957f\u57ce", "\u6c34\u7acb\u65b9", "\u9e1f\u5de2", "\u5929\u575b", "\u5706\u660e\u56ed"],
-  xian: ["\u5175\u9a6c\u4fd1", "\u5927\u96c1\u697c", "\u5927\u96c1\u5854", "\u949f\u697c", "\u57ce\u5899"],
-  henan: ["\u5c11\u6797\u5bfa", "\u9f99\u95e8\u77f3\u7a9f", "\u6d1b\u9633", "\u5f00\u5c01"],
-  japan: ["\u5bcc\u58eb\u5c71", "\u4e1c\u4eac", "\u6d45\u8349\u5bfa", "\u4eac\u90fd", "\u5927\u962a", "\u5948\u826f"],
-  world: ["\u57c3\u83f2\u5c14", "\u6bd4\u8428", "\u6597\u517d\u573a", "\u7f57\u9a6c", "\u91d1\u5b57\u5854", "\u57c3\u53ca", "\u5df4\u9ece", "\u4f26\u6566", "\u5a01\u5c3c\u65af", "\u96c5\u5178", "\u5723\u6258\u91cc\u5c3c"],
-  virtual: ["\u52a8\u6f2b", "\u5361\u901a", "\u8d5b\u535a", "\u865a\u62df", "\u68a6\u5e7b"],
+  "beijing": [
+    "\u5317\u4eac",
+    "\u6545\u5bab",
+    "\u5929\u5b89\u95e8",
+    "\u9890\u548c\u56ed",
+    "\u516b\u8fbe\u5cad",
+    "\u957f\u57ce",
+    "\u6c34\u7acb\u65b9",
+    "\u9e1f\u5de2",
+    "\u5929\u575b",
+    "\u5706\u660e\u56ed"
+  ],
+  "xian": [
+    "\u897f\u5b89",
+    "\u5175\u9a6c\u4fd1",
+    "\u5927\u96c1\u5854",
+    "\u5927\u96c1\u697c",
+    "\u949f\u697c",
+    "\u57ce\u5899"
+  ],
+  "henan": [
+    "\u6cb3\u5357",
+    "\u5c11\u6797\u5bfa",
+    "\u9f99\u95e8\u77f3\u7a9f",
+    "\u6d1b\u9633",
+    "\u5f00\u5c01"
+  ],
+  "world": [
+    "\u4e16\u754c\u540d\u80dc",
+    "\u57c3\u83f2\u5c14",
+    "\u6bd4\u8428",
+    "\u6597\u517d\u573a",
+    "\u7f57\u9a6c",
+    "\u91d1\u5b57\u5854",
+    "\u57c3\u53ca",
+    "\u5df4\u9ece",
+    "\u4f26\u6566",
+    "\u7ebd\u7ea6",
+    "\u5a01\u5c3c\u65af",
+    "\u96c5\u5178",
+    "\u5723\u6258\u91cc\u5c3c",
+    "\u8fea\u62dc",
+    "\u83ab\u65af\u79d1",
+    "\u610f\u5927\u5229",
+    "\u6cd5\u56fd",
+    "\u65e5\u672c",
+    "\u5bcc\u58eb\u5c71",
+    "\u4e1c\u4eac",
+    "\u6d45\u8349\u5bfa",
+    "\u4eac\u90fd",
+    "\u5927\u962a",
+    "\u5948\u826f",
+    "\u6a31"
+  ],
+  "virtual": [
+    "\u865a\u62df\u80cc\u666f",
+    "\u52a8\u6f2b",
+    "\u5361\u901a",
+    "\u8d5b\u535a",
+    "\u865a\u62df",
+    "\u4e8c\u6b21\u5143",
+    "\u63d2\u753b",
+    "\u68a6\u5e7b",
+    "\u672a\u6765",
+    "\u50cf\u7d20",
+    "\u7ae5\u8bdd"
+  ],
+  "guizhou": [
+    "\u8d35\u5dde",
+    "\u68b5\u51c0\u5c71",
+    "\u9ec4\u679c\u6811",
+    "\u8354\u6ce2",
+    "\u5c0f\u4e03\u5b54",
+    "\u897f\u6c5f",
+    "\u82d7\u5be8",
+    "\u7ec7\u91d1\u6d1e"
+  ],
+  "jiangxi": [
+    "\u6c5f\u897f",
+    "\u4e95\u5188\u5c71",
+    "\u6ed5\u738b\u9601",
+    "\u5a7a\u6e90",
+    "\u5fbd\u6d3e"
+  ],
+  "nanjing": [
+    "\u5357\u4eac",
+    "\u592b\u5b50\u5e99",
+    "\u7075\u8c37\u5bfa",
+    "\u660e\u5b5d\u9675"
+  ],
+  "sichuan": [
+    "\u56db\u5ddd",
+    "\u5b89\u4ec1",
+    "\u4e5d\u5be8\u6c9f",
+    "\u4e50\u5c71",
+    "\u5927\u4f5b"
+  ],
+  "wuhan": [
+    "\u6b66\u6c49",
+    "\u53e4\u7434\u53f0",
+    "\u6674\u5ddd\u9601"
+  ],
+  "yunnan": [
+    "\u4e91\u5357",
+    "\u5927\u7406",
+    "\u6d31\u6d77",
+    "\u9999\u683c\u91cc\u62c9",
+    "\u7389\u9f99\u96ea\u5c71"
+  ],
+  "custom": []
 };
 
 const moduleView = document.getElementById("module-view");
@@ -41,16 +428,22 @@ function isCustomTemplate(template) {
   return /(?:\u81ea\u5b9a\u4e49|custom)/i.test(`${template.label || ""} ${template.name || ""}`);
 }
 
+function templateSearchText(template) {
+  return `${template.label || ""} ${template.name || ""} ${template.group || ""}`;
+}
+
 function isTemplateInScene(template, scene) {
   if (scene.key === "custom") {
     return isCustomTemplate(template);
   }
-  return scene.keywords.some((keyword) => (template.label || "").includes(keyword));
+  const haystack = templateSearchText(template);
+  return scene.keywords.some((keyword) => haystack.includes(keyword));
 }
 
 function getTemplateRank(template, scene) {
   const hints = ORDER_HINTS[scene.key] || [];
-  const index = hints.findIndex((hint) => (template.label || "").includes(hint));
+  const haystack = templateSearchText(template);
+  const index = hints.findIndex((hint) => haystack.includes(hint));
   return index >= 0 ? index : 999;
 }
 

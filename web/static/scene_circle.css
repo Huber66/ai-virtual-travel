@@ -190,8 +190,8 @@ button {
 }
 
 .scene-stage::before {
-  width: min(900px, 66vw);
-  height: min(900px, 66vw);
+  width: min(980px, 72vw);
+  height: min(980px, 72vw);
   background:
     radial-gradient(circle, rgba(143, 215, 255, 0.15), transparent 30%),
     radial-gradient(circle, transparent 44%, rgba(143, 215, 255, 0.08) 45%, transparent 46%),
@@ -200,8 +200,8 @@ button {
 }
 
 .scene-stage::after {
-  width: min(820px, 58vw);
-  height: min(210px, 18vh);
+  width: min(900px, 64vw);
+  height: min(230px, 18vh);
   background: radial-gradient(ellipse, rgba(95, 207, 255, 0.2), rgba(87, 66, 210, 0.12) 48%, transparent 72%);
   filter: blur(30px);
 }
@@ -353,12 +353,20 @@ button {
   animation-delay: calc(var(--enter-index, 0) * 80ms + 180ms);
 }
 
+.module-item-small {
+  --orb-size: clamp(78px, 5.2vw, 106px);
+}
+
+.module-item-medium {
+  --orb-size: clamp(96px, 6.6vw, 132px);
+}
+
 .module-item-large {
-  --orb-size: clamp(116px, 8.2vw, 158px);
+  --orb-size: clamp(112px, 7.7vw, 152px);
 }
 
 .module-item-hero {
-  --orb-size: clamp(128px, 9.2vw, 176px);
+  --orb-size: clamp(126px, 8.8vw, 172px);
 }
 
 .module-item-center {
@@ -380,13 +388,17 @@ button {
 }
 
 .module-item:hover {
-  --scale: 1.045;
-  z-index: 8;
+  --scale: 1.16;
+  z-index: 18;
 }
 
 .module-item.active {
-  --scale: 1.075;
-  z-index: 9;
+  --scale: 1.08;
+  z-index: 12;
+}
+
+.module-item.active:hover {
+  --scale: 1.18;
 }
 
 .module-thumb {
@@ -1135,13 +1147,15 @@ button {
   }
 
   .module-item,
+  .module-item-small,
+  .module-item-medium,
   .module-item-large,
   .module-item-hero {
     position: relative !important;
     left: auto !important;
     top: auto !important;
-    width: clamp(106px, 30vw, 138px);
-    height: clamp(106px, 30vw, 138px);
+    width: clamp(106px, 29vw, 138px);
+    height: clamp(106px, 29vw, 138px);
     transform: none;
     animation: none;
     opacity: 1;
@@ -1149,12 +1163,12 @@ button {
   }
 
   .module-item {
-    --orb-size: clamp(106px, 30vw, 138px);
+    --orb-size: clamp(106px, 29vw, 138px);
   }
 
   .module-item:hover,
   .module-item.active {
-    transform: translateY(-3px) scale(1.025);
+    transform: translateY(-3px) scale(1.045);
   }
 
   .module-item-center {
@@ -1165,30 +1179,17 @@ button {
     margin-bottom: 6px;
   }
 
-  .module-item[data-scene="beijing"] {
-    order: 2;
-  }
-
-  .module-item[data-scene="xian"] {
-    order: 3;
-  }
-
-  .module-item[data-scene="virtual"] {
-    order: 4;
-  }
-
-  .module-item[data-scene="henan"] {
-    order: 5;
-  }
-
-  .module-item[data-scene="world"] {
-    order: 6;
-  }
-
-  .module-item[data-scene="japan"] {
-    order: 7;
-    grid-column: 1 / -1;
-  }
+  .module-item[data-scene="beijing"] { order: 2; }
+  .module-item[data-scene="xian"] { order: 3; }
+  .module-item[data-scene="virtual"] { order: 4; }
+  .module-item[data-scene="henan"] { order: 5; }
+  .module-item[data-scene="world"] { order: 6; }
+  .module-item[data-scene="guizhou"] { order: 7; }
+  .module-item[data-scene="jiangxi"] { order: 8; }
+  .module-item[data-scene="nanjing"] { order: 9; }
+  .module-item[data-scene="sichuan"] { order: 10; }
+  .module-item[data-scene="wuhan"] { order: 11; }
+  .module-item[data-scene="yunnan"] { order: 12; }
 
   .module-label {
     min-width: min(108px, 32vw);

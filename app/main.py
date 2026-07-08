@@ -65,24 +65,44 @@ def validate_image_file(upload: UploadFile, field_name: str) -> None:
         raise HTTPException(status_code=400, detail=f"{field_name} 必须是 jpg、png 或 webp 图片")
 
 
+def template_relative_path(template_path: Path) -> str:
+    return template_path.resolve().relative_to(settings.template_dir.resolve()).as_posix()
+
+
+def is_template_asset(path: Path) -> bool:
+    try:
+        relative_parts = path.resolve().relative_to(settings.template_dir.resolve()).parts
+    except ValueError:
+        return False
+    if not path.is_file() or path.suffix.lower() not in TEMPLATE_EXTENSIONS:
+        return False
+    return "person_sessions" not in relative_parts
+
+
 def resolve_template_file(template_name: str) -> Path:
-    cleaned_name = Path(template_name).name.strip()
-    if not cleaned_name:
-        raise HTTPException(status_code=400, detail="background_template_name 不能为空")
+    raw_name = unquote(template_name or "").strip().replace("\\", "/")
+    if not raw_name:
+        raise HTTPException(status_code=400, detail="background_template_name cannot be empty")
+
+    cleaned_path = Path(raw_name)
+    if cleaned_path.is_absolute() or any(part in {"", ".", ".."} for part in cleaned_path.parts):
+        raise HTTPException(status_code=400, detail="background_template_name is invalid")
 
     template_root = settings.template_dir.resolve()
-    template_path = (template_root / cleaned_name).resolve()
-    if template_path.parent != template_root:
-        raise HTTPException(status_code=400, detail="background_template_name 非法")
+    template_path = (template_root / cleaned_path).resolve()
+    if template_root != template_path and template_root not in template_path.parents:
+        raise HTTPException(status_code=400, detail="background_template_name is invalid")
 
     if not template_path.is_file() or template_path.suffix.lower() not in TEMPLATE_EXTENSIONS:
-        raise HTTPException(status_code=404, detail="所选背景模板不存在")
+        raise HTTPException(status_code=404, detail="selected background template does not exist")
 
     return template_path
 
 
 def ensure_template_thumbnail(template_path: Path) -> Path:
-    thumb_path = settings.template_thumb_dir / f"{template_path.stem}.webp"
+    relative_thumb_path = Path(template_relative_path(template_path)).with_suffix(".webp")
+    thumb_path = settings.template_thumb_dir / relative_thumb_path
+    thumb_path.parent.mkdir(parents=True, exist_ok=True)
 
     try:
         if thumb_path.exists() and thumb_path.stat().st_mtime_ns >= template_path.stat().st_mtime_ns:
@@ -98,14 +118,14 @@ def ensure_template_thumbnail(template_path: Path) -> Path:
 
 
 def warm_template_thumbnails() -> None:
-    for path in sorted(settings.template_dir.iterdir()):
-        if not path.is_file() or path.suffix.lower() not in TEMPLATE_EXTENSIONS:
+    for path in sorted(settings.template_dir.rglob("*"), key=lambda item: item.as_posix()):
+        if not is_template_asset(path):
             continue
 
         try:
             ensure_template_thumbnail(path)
         except Exception as error:
-            logger.warning("template thumbnail build failed for %s: %s", path.name, error)
+            logger.warning("template thumbnail build failed for %s: %s", path, error)
 
 
 def normalize_media_type(media_type: str) -> str:
@@ -928,17 +948,25 @@ async def runtime_info(request: Request) -> JSONResponse:
 @app.get("/api/templates")
 async def list_templates() -> JSONResponse:
     templates = []
-    for path in sorted(settings.template_dir.iterdir()):
-        if not path.is_file() or path.suffix.lower() not in TEMPLATE_EXTENSIONS:
+    template_root = settings.template_dir.resolve()
+    thumb_root = settings.template_thumb_dir.resolve()
+    for path in sorted(settings.template_dir.rglob("*"), key=lambda item: item.resolve().relative_to(template_root).as_posix()):
+        if not is_template_asset(path):
             continue
+
         thumb_path = ensure_template_thumbnail(path)
         version = path.stat().st_mtime_ns
+        relative_name = template_relative_path(path)
+        relative_thumb_name = thumb_path.resolve().relative_to(thumb_root).as_posix()
+        relative_parts = Path(relative_name).parts
+        group = relative_parts[0] if len(relative_parts) > 1 else ""
         templates.append(
             {
-                "name": path.name,
+                "name": relative_name,
                 "label": path.stem,
-                "url": f"/template-files/{quote(path.name)}?v={version}",
-                "thumbnail_url": f"/template-thumbs/{quote(thumb_path.name)}?v={version}",
+                "group": group,
+                "url": f"/template-files/{quote(relative_name, safe='/')}?v={version}",
+                "thumbnail_url": f"/template-thumbs/{quote(relative_thumb_name, safe='/')}?v={version}",
             }
         )
 

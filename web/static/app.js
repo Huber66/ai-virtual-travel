@@ -85,44 +85,265 @@ let normalizedBackgroundCacheKey = "";
 let cameraCaptureCountdownTimer = null;
 
 const SCENE_DEFINITIONS = {
-  beijing: {
-    label: "北京",
-    keywords: ["故宫", "天安门", "颐和园", "八达岭", "长城", "水立方", "鸟巢", "天坛", "圆明园"],
+  "beijing": {
+    "label": "\u5317\u4eac",
+    "keywords": [
+      "\u5317\u4eac",
+      "\u6545\u5bab",
+      "\u5929\u5b89\u95e8",
+      "\u9890\u548c\u56ed",
+      "\u516b\u8fbe\u5cad",
+      "\u957f\u57ce",
+      "\u6c34\u7acb\u65b9",
+      "\u9e1f\u5de2",
+      "\u5929\u575b",
+      "\u5706\u660e\u56ed"
+    ]
   },
-  xian: {
-    label: "西安",
-    keywords: ["兵马俑", "西安", "大雁塔", "大雁楼", "钟楼", "城墙"],
+  "xian": {
+    "label": "\u897f\u5b89",
+    "keywords": [
+      "\u897f\u5b89",
+      "\u5175\u9a6c\u4fd1",
+      "\u5927\u96c1\u5854",
+      "\u5927\u96c1\u697c",
+      "\u949f\u697c",
+      "\u57ce\u5899"
+    ]
   },
-  henan: {
-    label: "河南",
-    keywords: ["少林寺", "龙门石窟", "河南", "洛阳", "开封"],
+  "henan": {
+    "label": "\u6cb3\u5357",
+    "keywords": [
+      "\u6cb3\u5357",
+      "\u5c11\u6797\u5bfa",
+      "\u9f99\u95e8\u77f3\u7a9f",
+      "\u6d1b\u9633",
+      "\u5f00\u5c01"
+    ]
   },
-  japan: {
-    label: "日本",
-    keywords: ["富士山", "日本", "东京", "浅草寺", "京都", "大阪", "奈良", "樱"],
+  "world": {
+    "label": "\u4e16\u754c\u540d\u80dc",
+    "keywords": [
+      "\u4e16\u754c\u540d\u80dc",
+      "\u57c3\u83f2\u5c14",
+      "\u6bd4\u8428",
+      "\u6597\u517d\u573a",
+      "\u7f57\u9a6c",
+      "\u91d1\u5b57\u5854",
+      "\u57c3\u53ca",
+      "\u5df4\u9ece",
+      "\u4f26\u6566",
+      "\u7ebd\u7ea6",
+      "\u5a01\u5c3c\u65af",
+      "\u96c5\u5178",
+      "\u5723\u6258\u91cc\u5c3c",
+      "\u8fea\u62dc",
+      "\u83ab\u65af\u79d1",
+      "\u610f\u5927\u5229",
+      "\u6cd5\u56fd",
+      "\u65e5\u672c",
+      "\u5bcc\u58eb\u5c71",
+      "\u4e1c\u4eac",
+      "\u6d45\u8349\u5bfa",
+      "\u4eac\u90fd",
+      "\u5927\u962a",
+      "\u5948\u826f",
+      "\u6a31"
+    ]
   },
-  world: {
-    label: "世界名胜",
-    keywords: ["埃菲尔", "比萨", "斗兽场", "罗马", "金字塔", "埃及", "巴黎", "伦敦", "纽约", "威尼斯", "雅典", "圣托里尼", "迪拜", "莫斯科", "意大利", "法国"],
+  "virtual": {
+    "label": "\u865a\u62df\u80cc\u666f",
+    "keywords": [
+      "\u865a\u62df\u80cc\u666f",
+      "\u52a8\u6f2b",
+      "\u5361\u901a",
+      "\u8d5b\u535a",
+      "\u865a\u62df",
+      "\u4e8c\u6b21\u5143",
+      "\u63d2\u753b",
+      "\u68a6\u5e7b",
+      "\u672a\u6765",
+      "\u50cf\u7d20",
+      "\u7ae5\u8bdd"
+    ]
   },
-  virtual: {
-    label: "虚拟背景",
-    keywords: ["动漫", "卡通", "赛博", "虚拟", "二次元", "插画", "梦幻", "未来", "像素", "童话"],
+  "guizhou": {
+    "label": "\u8d35\u5dde",
+    "keywords": [
+      "\u8d35\u5dde",
+      "\u68b5\u51c0\u5c71",
+      "\u9ec4\u679c\u6811",
+      "\u8354\u6ce2",
+      "\u5c0f\u4e03\u5b54",
+      "\u897f\u6c5f",
+      "\u82d7\u5be8",
+      "\u7ec7\u91d1\u6d1e"
+    ]
   },
-  custom: {
-    label: "自定义",
-    keywords: [],
+  "jiangxi": {
+    "label": "\u6c5f\u897f",
+    "keywords": [
+      "\u6c5f\u897f",
+      "\u4e95\u5188\u5c71",
+      "\u6ed5\u738b\u9601",
+      "\u5a7a\u6e90",
+      "\u5fbd\u6d3e"
+    ]
   },
+  "nanjing": {
+    "label": "\u5357\u4eac",
+    "keywords": [
+      "\u5357\u4eac",
+      "\u592b\u5b50\u5e99",
+      "\u7075\u8c37\u5bfa",
+      "\u660e\u5b5d\u9675"
+    ]
+  },
+  "sichuan": {
+    "label": "\u56db\u5ddd",
+    "keywords": [
+      "\u56db\u5ddd",
+      "\u5b89\u4ec1",
+      "\u4e5d\u5be8\u6c9f",
+      "\u4e50\u5c71",
+      "\u5927\u4f5b"
+    ]
+  },
+  "wuhan": {
+    "label": "\u6b66\u6c49",
+    "keywords": [
+      "\u6b66\u6c49",
+      "\u53e4\u7434\u53f0",
+      "\u6674\u5ddd\u9601"
+    ]
+  },
+  "yunnan": {
+    "label": "\u4e91\u5357",
+    "keywords": [
+      "\u4e91\u5357",
+      "\u5927\u7406",
+      "\u6d31\u6d77",
+      "\u9999\u683c\u91cc\u62c9",
+      "\u7389\u9f99\u96ea\u5c71"
+    ]
+  },
+  "custom": {
+    "label": "\u81ea\u5b9a\u4e49",
+    "keywords": []
+  }
 };
 
 const SCENE_ORDER_HINTS = {
-  beijing: ["故宫", "天安门", "颐和园", "八达岭", "长城", "水立方", "鸟巢", "天坛", "圆明园"],
-  xian: ["兵马俑", "大雁楼", "大雁塔", "钟楼", "城墙"],
-  henan: ["少林寺", "龙门石窟", "洛阳", "开封"],
-  japan: ["富士山", "东京", "浅草寺", "京都", "大阪", "奈良"],
-  world: ["埃菲尔", "比萨", "斗兽场", "罗马", "金字塔", "埃及", "巴黎", "伦敦", "威尼斯", "雅典", "圣托里尼"],
-  virtual: ["动漫", "卡通", "赛博", "虚拟", "梦幻"],
-  custom: [],
+  "beijing": [
+    "\u5317\u4eac",
+    "\u6545\u5bab",
+    "\u5929\u5b89\u95e8",
+    "\u9890\u548c\u56ed",
+    "\u516b\u8fbe\u5cad",
+    "\u957f\u57ce",
+    "\u6c34\u7acb\u65b9",
+    "\u9e1f\u5de2",
+    "\u5929\u575b",
+    "\u5706\u660e\u56ed"
+  ],
+  "xian": [
+    "\u897f\u5b89",
+    "\u5175\u9a6c\u4fd1",
+    "\u5927\u96c1\u5854",
+    "\u5927\u96c1\u697c",
+    "\u949f\u697c",
+    "\u57ce\u5899"
+  ],
+  "henan": [
+    "\u6cb3\u5357",
+    "\u5c11\u6797\u5bfa",
+    "\u9f99\u95e8\u77f3\u7a9f",
+    "\u6d1b\u9633",
+    "\u5f00\u5c01"
+  ],
+  "world": [
+    "\u4e16\u754c\u540d\u80dc",
+    "\u57c3\u83f2\u5c14",
+    "\u6bd4\u8428",
+    "\u6597\u517d\u573a",
+    "\u7f57\u9a6c",
+    "\u91d1\u5b57\u5854",
+    "\u57c3\u53ca",
+    "\u5df4\u9ece",
+    "\u4f26\u6566",
+    "\u7ebd\u7ea6",
+    "\u5a01\u5c3c\u65af",
+    "\u96c5\u5178",
+    "\u5723\u6258\u91cc\u5c3c",
+    "\u8fea\u62dc",
+    "\u83ab\u65af\u79d1",
+    "\u610f\u5927\u5229",
+    "\u6cd5\u56fd",
+    "\u65e5\u672c",
+    "\u5bcc\u58eb\u5c71",
+    "\u4e1c\u4eac",
+    "\u6d45\u8349\u5bfa",
+    "\u4eac\u90fd",
+    "\u5927\u962a",
+    "\u5948\u826f",
+    "\u6a31"
+  ],
+  "virtual": [
+    "\u865a\u62df\u80cc\u666f",
+    "\u52a8\u6f2b",
+    "\u5361\u901a",
+    "\u8d5b\u535a",
+    "\u865a\u62df",
+    "\u4e8c\u6b21\u5143",
+    "\u63d2\u753b",
+    "\u68a6\u5e7b",
+    "\u672a\u6765",
+    "\u50cf\u7d20",
+    "\u7ae5\u8bdd"
+  ],
+  "guizhou": [
+    "\u8d35\u5dde",
+    "\u68b5\u51c0\u5c71",
+    "\u9ec4\u679c\u6811",
+    "\u8354\u6ce2",
+    "\u5c0f\u4e03\u5b54",
+    "\u897f\u6c5f",
+    "\u82d7\u5be8",
+    "\u7ec7\u91d1\u6d1e"
+  ],
+  "jiangxi": [
+    "\u6c5f\u897f",
+    "\u4e95\u5188\u5c71",
+    "\u6ed5\u738b\u9601",
+    "\u5a7a\u6e90",
+    "\u5fbd\u6d3e"
+  ],
+  "nanjing": [
+    "\u5357\u4eac",
+    "\u592b\u5b50\u5e99",
+    "\u7075\u8c37\u5bfa",
+    "\u660e\u5b5d\u9675"
+  ],
+  "sichuan": [
+    "\u56db\u5ddd",
+    "\u5b89\u4ec1",
+    "\u4e5d\u5be8\u6c9f",
+    "\u4e50\u5c71",
+    "\u5927\u4f5b"
+  ],
+  "wuhan": [
+    "\u6b66\u6c49",
+    "\u53e4\u7434\u53f0",
+    "\u6674\u5ddd\u9601"
+  ],
+  "yunnan": [
+    "\u4e91\u5357",
+    "\u5927\u7406",
+    "\u6d31\u6d77",
+    "\u9999\u683c\u91cc\u62c9",
+    "\u7389\u9f99\u96ea\u5c71"
+  ],
+  "custom": []
 };
 
 function setMode(mode) {
@@ -187,18 +408,27 @@ function syncSceneLabel() {
   sceneLabel.textContent = SCENE_DEFINITIONS[selectedSceneKey]?.label || "北京";
 }
 
-function isTemplateInScene(templateLabel, sceneKey) {
+function templateSearchText(template) {
+  if (typeof template === "string") {
+    return template;
+  }
+  return `${template?.label || ""} ${template?.name || ""} ${template?.group || ""}`;
+}
+
+function isTemplateInScene(template, sceneKey) {
   const scene = SCENE_DEFINITIONS[sceneKey];
   if (!scene) {
     return false;
   }
 
-  return scene.keywords.some((keyword) => templateLabel.includes(keyword));
+  const haystack = templateSearchText(template);
+  return scene.keywords.some((keyword) => haystack.includes(keyword));
 }
 
 function getTemplateOrderRank(template, sceneKey) {
   const orderHints = SCENE_ORDER_HINTS[sceneKey] || [];
-  const matchedIndex = orderHints.findIndex((hint) => template.label.includes(hint));
+  const haystack = templateSearchText(template);
+  const matchedIndex = orderHints.findIndex((hint) => haystack.includes(hint));
   return matchedIndex >= 0 ? matchedIndex : 999;
 }
 
@@ -221,7 +451,7 @@ function renderTemplateGallery() {
   }
 
   const filteredTemplates = availableTemplates
-    .filter((template) => isTemplateInScene(template.label || "", selectedSceneKey))
+    .filter((template) => isTemplateInScene(template, selectedSceneKey))
     .sort((leftTemplate, rightTemplate) => compareTemplatesInScene(leftTemplate, rightTemplate, selectedSceneKey));
 
   templateGallery.innerHTML = "";
@@ -237,7 +467,7 @@ function renderTemplateGallery() {
     return;
   }
 
-  if (selectedTemplate && !isTemplateInScene(selectedTemplate.label || "", selectedSceneKey)) {
+  if (selectedTemplate && !isTemplateInScene(selectedTemplate, selectedSceneKey)) {
     clearTemplateSelection();
     targetPreview.classList.add("hidden");
   }
